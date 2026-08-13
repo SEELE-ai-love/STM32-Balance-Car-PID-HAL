@@ -1,0 +1,32 @@
+# ===== Keil uVision 编译产物 =====
+Objects/
+Listings/
+DebugConfig/
+*.uvoptx
+*.uvguix
+*.axf
+*.o
+*.crf
+*.d
+*.dep
+*.htm
+*.lst
+*.map
+*.lnp
+*.sct
+*.build_log.htm
+*.iex
+
+# ===== 系统 / 编辑器 =====
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.swp
+.idea/
+.vscode/
+
+# ===== 压缩包 / 杂项 =====
+*.zip
+*.rar
+*.7z
