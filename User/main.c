@@ -17,6 +17,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 
 /******************** RTOS 学习演示开关 ********************/
@@ -280,6 +281,20 @@ static void Task_Control(void *argument)
 		{
 			Motor_SetSpeed(1, 0);
 			Motor_SetSpeed(2, 0);
+		}
+
+
+		/**************** VOFA+ 上位机调参发送（FireWater 协议） ****************/
+		/* printf 已重定向到 USART1（USB 串口 PA9/PA10，9600bps）
+		 * VOFA+ 选择 FireWater 协议即可，无需 Plot 插件：
+		 *     一帧一行：目标角度,实际角度\n   （逗号分隔，换行结尾）
+		 * 角度环每 10ms 更新一次，但 9600 波特率下逐字节发送较慢，
+		 * 故每 5 个周期（50ms / 20Hz）发送一帧，刷新率足够且不拖累控制任务。 */
+		static uint8_t VofaSendCnt = 0;
+		if (++VofaSendCnt >= 5)
+		{
+			VofaSendCnt = 0;
+			printf("%.1f,%.1f\n", (double)AnglePID.Target, (double)Angle);
 		}
 
 		/* 绝对延时：固定 10ms 周期 */
